@@ -25,13 +25,11 @@ val junitJupiterVersion = "5.9.1"
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
-	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testImplementation("org.seleniumhq.selenium:selenium-java:${seleniumJavaVersion}")
 	testImplementation("io.github.bonigarcia:webdrivermanager:${webdrivermanagerVersion}")
 	testImplementation("io.github.bonigarcia:selenium-jupiter:${seleniumJupiterVersion}")
-	testImplementation("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
 }
 
 tasks.register<Test>("unitTest") {
