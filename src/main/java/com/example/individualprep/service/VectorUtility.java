@@ -24,7 +24,6 @@ public class VectorUtility {
 
     public double[] multiply(double[] v1, int x) {
         // TODO: Implement me properly!
-        return new double[] { 0.0, 0.0, 0.0 };
     }
     
     public double dotProduct(double[] v1, double[] v2) {
