@@ -1,7 +1,10 @@
 plugins {
 	java
+	checkstyle
+	jacoco
 	id ("org.springframework.boot") version "4.0.2"
 	id ("io.spring.dependency-management") version "1.1.7"
+	id("org.sonarqube") version "6.2.0.5505"
 }
 
 group = "com.example"
@@ -50,6 +53,32 @@ tasks.register<Test>("functionalTest") {
 	}
 }
 
+checkstyle {
+	toolVersion = "10.17.0"
+}
+
+tasks.withType<Checkstyle>().configureEach {
+	isIgnoreFailures = false
+}
+
 tasks.withType<Test>().configureEach {
 	useJUnitPlatform()
+}
+
+tasks.jacocoTestReport {
+	dependsOn(tasks.test)
+	reports {
+		xml.required.set(true)
+		csv.required.set(false)
+		html.required.set(true)
+	}
+}
+
+sonar {
+	properties {
+		property("sonar.host.url", "https://sonarcloud.io")
+		property("sonar.organization", System.getenv("SONAR_ORGANIZATION"))
+		property("sonar.projectKey", System.getenv("SONAR_PROJECT_KEY"))
+		property("sonar.coverage.jacoco.xmlReportPaths", "${layout.buildDirectory.get().asFile}/reports/jacoco/test/jacocoTestReport.xml")
+	}
 }
