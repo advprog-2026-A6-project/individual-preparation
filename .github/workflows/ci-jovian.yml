@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - ci-cd/jovian
+  pull_request:
+    branches:
+      - ci-cd/jovian
+
+permissions:
+  contents: read
+
+jobs:
+  quality-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x gradlew
+
+      - name: Run linter (Checkstyle)
+        run: ./gradlew --no-daemon checkstyleMain checkstyleTest
+
+      - name: Run tests and coverage report
+        run: ./gradlew --no-daemon test jacocoTestReport
