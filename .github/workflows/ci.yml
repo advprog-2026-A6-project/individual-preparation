@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - ci-cd/affandi
   pull_request:
     branches:
       - main
+      - ci-cd/affandi
 
 permissions:
   contents: read
